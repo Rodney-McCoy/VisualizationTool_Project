@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 import java.util.ArrayList;
 
 public class Model {

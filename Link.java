@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 public class Link {
     private double value;
     private Node node1;
