@@ -125,15 +125,6 @@ public class Graph {
         return null;
     }
 
-    public void editNode(String name, String newName, double newValue) throws Exception {
-        Node node = getNode(name);
-        if(node == null){
-            throw new Exception("Node does not exist");
-        }
-        node.setName(newName);
-        node.setValue(newValue);
-    }
-
     public void editNode(String name, String newName) throws Exception {
         Node node = getNode(name);
         if(node == null){
@@ -142,37 +133,12 @@ public class Graph {
         node.setName(newName);
     }
 
-    public void editNode(String name, double newValue) throws Exception {
-        Node node = getNode(name);
-        if(node == null){
-            throw new Exception("Node does not exist");
-        }
-        node.setValue(newValue);
-    }
-
-    public void editNode(int id, String newName, double newValue) throws Exception {
-        Node node = getNode(id);
-        if(node == null){
-            throw new Exception("Node does not exist");
-        }
-        node.setName(newName);
-        node.setValue(newValue);
-    }
-
     public void editNode(int id, String newName) throws Exception {
         Node node = getNode(id);
         if(node == null){
             throw new Exception("Node does not exist");
         }
         node.setName(newName);
-    }
-
-    public void editNode(int id, double newValue) throws Exception {
-        Node node = getNode(id);
-        if(node == null){
-            throw new Exception("Node does not exist");
-        }
-        node.setValue(newValue);
     }
 
     public void editLink(String name1, String name2, double newValue) throws Exception {
@@ -273,15 +239,15 @@ public class Graph {
     @Override
     public String toString() {
         String finalString = "";
-        finalString = finalString.concat("______Nodes_______\n");
-        finalString = finalString.concat("Name     ID Val\n");
-        finalString = finalString.concat("-------- -- ------\n");
+        finalString = finalString.concat("____Nodes_____\n");
+        finalString = finalString.concat("Name     ID\n");
+        finalString = finalString.concat("-------- --\n");
         for(Node n: nodes){
             finalString = finalString.concat(n.toString() + "\n");
         }
 
         finalString = finalString.concat("\n");
-        finalString = finalString.concat("______Links_______\n");
+        finalString = finalString.concat("____Links_____\n");
         finalString = finalString.concat("Link    Val\n");
         finalString = finalString.concat("------- ------\n");
         for(Link l: links){
