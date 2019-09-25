@@ -67,13 +67,9 @@ public class Algorithms {
     }
 
 
-<<<<<<< HEAD
     public static Graph bellmanFord(Graph graph, Node source){
         double[] distance = new double[graph.getNumNodes()];
-=======
-    public static double[] bellmanFord(Graph graph, Node source){
-        double distance[graph.getNumNodes()];
->>>>>>> e1b96017582575f9abbecef704747ce010376a46
+
 
         Link[] links = new Link[graph.getNumLinks() - 1];
 
@@ -109,18 +105,15 @@ public class Algorithms {
                             //if current distance from source to node2 is greater than link of node1 and 2 plus distance from source to node1
                             if (distance[graph.links.get(j).getNode2().getID()] > (graph.links.get(j).getValue() + distance[graph.links.get(j).getNode1().getID()])){
                                 //sets equal as the same thing
-<<<<<<< HEAD
-                                distance[graph.getLinks().get(j).getNode2().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()]);
+                                distance[graph.getLinks().get(j).getNode2().getID()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getID()]);
 
                                 //doesn't set destination links for source
                                 if(!graph.getNode(i).equals(source)) {
                                     //getting the links for shortest paths
-                                    links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
+                                    links[graph.getLinks().get(j).getNode2().getID() - sourcePassed] = graph.getLinks().get(j);
                                 }
 
-=======
-                                distance[graph.links.get(j).getNode2().getID()] = (graph.links.get(j).getValue() + distance[graph.links.get(j).getNode1().getID()]);
->>>>>>> e1b96017582575f9abbecef704747ce010376a46
+
                             }
                         }
 
