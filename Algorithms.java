@@ -79,7 +79,7 @@ public class Algorithms {
                 distance[i] = 0;
             }
             else {
-                distance[i] = Double.MAX_VALUE;
+                distance[i] = INF;
             }
         }
 
@@ -89,7 +89,7 @@ public class Algorithms {
             //loops through every node each time
             for(int i = 0; i < graph.getNumNodes(); i++) {
                 //ensures only if there is already a path to it
-                if(distance[i] < Double.MAX_VALUE-1) {
+                if(distance[i] < INF-1) {
 
 
                     for (int j = 0; j < graph.getNumLinks(); j++) {
@@ -114,14 +114,5 @@ public class Algorithms {
 
         //distance should be an array of the shortest path from the source to each corresponding node on the graph
         return distance;
-    }
-
-
-
-
-
-    public static Graph algorithmName(Graph graph, Node source){
-        return null;
-
     }
 }

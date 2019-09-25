@@ -15,7 +15,9 @@ public class View {
                     "(7) Print Graph\n" +
                     "(8) Print Alg 1\n" +
                     "(9) Print Alg 2\n" +
-                    "(10) Quit\n");
+                    "(10) Load Graph\n" +
+                    "(11) Save Graph\n" +
+                    "(12) Quit\n");
             String userInput = in.nextLine();
             int choice = 0;
             try{
@@ -117,6 +119,12 @@ public class View {
                     System.out.println("Print Alg2");
                     break;
                 case 10:
+                    System.out.println("Load Graph");
+                    break;
+                case 11:
+                    System.out.println("Save Graph");
+                    break;
+                case 12:
                     System.out.println("Quit");
                     in.close();
                     System.exit(0);
