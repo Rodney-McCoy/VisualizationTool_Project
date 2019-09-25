@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 import java.util.Scanner;
 
 public class View {
@@ -13,9 +15,10 @@ public class View {
                     "(7) Print Graph\n" +
                     "(8) Run Floyd-Warshall\n" +
                     "(9) Run Bellman Ford\n" +
-                    "(10) Load Graph\n" +
-                    "(11) Save Graph\n" +
-                    "(12) Quit\n");
+                    "(10) Run Dijkstra\n" +
+                    "(11) Load Graph\n" +
+                    "(12) Save Graph\n" +
+                    "(13) Quit\n");
             String userInput = in.nextLine();
             int choice = 0;
             try{
@@ -28,8 +31,8 @@ public class View {
             switch (choice){
                 case 1:
                     System.out.println("Make Node");
-                    System.out.println("Enter a name for the Node followed by its value\n" +
-                                       "Ex. testNode 14");
+                    System.out.println("Enter a name for the Node\n" +
+                                       "Ex. testNode");
                     userInput = in.nextLine();
                     try{
                         Controller.makeNode(new Scanner(userInput));
@@ -78,9 +81,8 @@ public class View {
                     break;
                 case 5:
                     System.out.println("Edit Node");
-                    System.out.println("Enter a name or id of the Node then a new\n" +
-                                       "name, value, or both\n" +
-                                       "Ex. testNode newName 34 OR 0 newName 34");
+                    System.out.println("Enter a name or id of the Node then a new name\n" +
+                                       "Ex. testNode newName OR 0 newName");
                     userInput = in.nextLine();
                     try{
                         Controller.editNode(new Scanner(userInput));
@@ -123,17 +125,29 @@ public class View {
                         Controller.bellmanFord(new Scanner(userInput));
                         in.nextLine();
                     }catch (Exception e){
-                        System.out.println(e);
+                        System.out.println(e.getMessage());
                         in.nextLine();
                     }
                     break;
                 case 10:
-                    System.out.println("Load Graph");
+                    System.out.println("Enter a source Node name and an end Node name\n");
+                    userInput = in.nextLine();
+                    System.out.println("Running Dijkstra");
+                    try{
+                        Controller.printDijkstra(new Scanner(userInput));
+                        in.nextLine();
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                        in.nextLine();
+                    }
                     break;
                 case 11:
-                    System.out.println("Save Graph");
+                    System.out.println("Load Graph");
                     break;
                 case 12:
+                    System.out.println("Save Graph");
+                    break;
+                case 13:
                     System.out.println("Quit");
                     in.close();
                     System.exit(0);

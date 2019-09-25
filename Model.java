@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 import java.util.ArrayList;
 
 /**
@@ -173,5 +175,10 @@ public class Model {
 
     public static void bellmanFord(String in) throws Exception {
         System.out.print(Algorithms.bellmanFord(graphs.get(currGraph), graphs.get(currGraph).getNode(in)));
+    }
+
+    public static void printDijkstra(String start, String end) throws Exception {
+        Graph graph = graphs.get(currGraph);
+        System.out.println(Algorithms.dijkstra(graph, graph.getNode(start).getId(), graph.getNode(end).getId()));
     }
 }

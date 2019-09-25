@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 public class Algorithms {
 
     private static final double INF = Double.POSITIVE_INFINITY;
@@ -82,6 +84,91 @@ public class Algorithms {
             System.out.print("\n");
         }
         System.out.print("\n");
+    }
+
+    /**
+     * dijkstra- creates a graph of the links in the shortest path between startNode and endNode
+     * @param graph - graph in which to find the path
+     * @param startNode - beginning of the path
+     * @param endNode - end of the path
+     * @return - a graph containing the links for the path
+     * @throws Exception
+     */
+    public static Graph dijkstra(Graph graph, int startNode, int endNode) throws Exception {
+
+        int numNodes = graph.getNumNodes();
+        int[] reverse = new int[numNodes];
+        double[] distance = new double[numNodes];
+        int[] parent = new int[numNodes];
+        boolean[] visited = new boolean[numNodes];
+        int visitedNodes = 0;
+        int minV;
+        int minI = 0;
+        int cur;
+        int pathSize = 0;
+        Graph shortest = new Graph();
+
+        for (int i = 0; i < numNodes; i++) {
+            distance[i] = INF;
+            parent[i] = startNode;
+            visited[i] = false;
+        }
+        distance[startNode] = 0;
+
+        while(visitedNodes < numNodes){
+
+            //Find minimun node not visited yet
+            minV = (int) INF;
+            for (int i = 1; i < numNodes; i++) {
+                if ((distance[i] < minV) && !visited[i]){
+                    minI = i;
+                    minV = (int) distance[i];
+                }
+            }
+
+            //Mark as visited
+            visited[minI] = true;
+            visitedNodes++;
+
+            //Find and update adjacent nodes
+            for (Node node:graph.getNodes()) {
+                for (Link link:graph.getLinks()) {
+                    if( ((link.getNode1() == graph.getNodes().get(minI) && link.getNode2() == node) || (link.getNode1() == node && link.getNode2() == graph.getNodes().get(minI))) && (distance[minI] + link.getValue() < distance[node.getId()]) ){
+                        parent[node.getId()] = minI;
+                        distance[node.getId()] = distance[minI] + link.getValue();
+                        break;
+                    }
+                }
+            }
+        }
+
+        cur = endNode;
+        for (int i = 0; i < numNodes; i++) {
+            reverse[i] = cur;
+            cur = parent[cur];
+            if (cur == startNode){
+                reverse[i + 1] = cur;
+                pathSize = i + 2;
+                break;
+            }
+        }
+
+        int[] path = new int[pathSize];
+        for (int i = 0; i < pathSize; i++) {
+            path[i] = reverse[pathSize - 1 - i];
+        }
+
+        for (int i = 0; i < pathSize - 1; i++) {
+            for (Link link:graph.getLinks()) {
+                if ( ((link.getNode1().getId() == path[i] && link.getNode2().getId() == path[i + 1]) || (link.getNode1().getId() == path[i + 1] && link.getNode2().getId() == path[i])) ){
+                    shortest.addLink(link);
+                    break;
+                }
+            }
+        }
+
+        return shortest;
+
     }
 
 

@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 import java.util.Scanner;
 
 public class Controller {
@@ -208,6 +210,7 @@ public class Controller {
     public static void bellmanFord(Scanner in) throws Exception{
 
         if(in.hasNextDouble()){
+            in.close();
             throw new Exception("Incorrect syntax for source node");
         }else if(in.hasNext()){
             Model.bellmanFord(in.next());
@@ -217,5 +220,32 @@ public class Controller {
             throw new Exception("No input read for source node");
         }
 
+    }
+
+    public static void printDijkstra(Scanner in) throws Exception {
+
+        String start;
+        String end;
+
+        if(in.hasNextDouble()){
+            in.close();
+            throw new Exception("Incorrect syntax for source node");
+        }else if(in.hasNext()){
+            start = in.next();
+            if(in.hasNextDouble()) {
+                in.close();
+                throw new Exception("Incorrect syntax for end node");
+            }else if(in.hasNext()){
+                end = in.next();
+                in.close();
+            }else{
+                in.close();
+                throw new Exception("No input read for end node");
+            }
+        }else{
+            in.close();
+            throw new Exception("No input read for source node");
+        }
+        Model.printDijkstra(start,end);
     }
 }

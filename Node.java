@@ -1,3 +1,5 @@
+package VisualizationTool_Project;
+
 public class Node {
     private String name;
     private int id;
