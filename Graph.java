@@ -58,6 +58,22 @@ public class Graph {
         numLinks++;
     }
 
+    public void addLink(Link link) throws Exception {
+        Node node1 = getNode(link.getNode1());
+        if(node1 == null){
+            throw new Exception("Node one does not exist");
+        }
+        Node node2 = getNode(link.getNode2());
+        if(node2 == null){
+            throw new Exception("Node two does not exist");
+        }
+        if(getLink(link.getNode1(), link.getNode2()) != null){
+            throw new Exception("Link already exists");
+        }
+        links.add(link);
+        numLinks++;
+    }
+
     public void removeNode(String name) throws Exception {
         Node node = getNode(name);
         if(node == null){

@@ -69,9 +69,10 @@ public class Algorithms {
     }
 
 
-    public static double[] bellmanFord(Graph graph, Node source){
+    public static Graph bellmanFord(Graph graph, Node source){
         double[] distance = new double[graph.getNumNodes()];
 
+        Link[] links = new Link[graph.getNumLinks() - 1];
 
         //Set all weights to "infinite" except for source to source
         for(int i = 1; i< graph.getNumNodes(); i++){
@@ -83,14 +84,21 @@ public class Algorithms {
             }
         }
 
+        int sourcePassed = 0;
+
         //max of numNodes - 1 iterations
         for(int x = 1; x < graph.getNumNodes(); x++){
+
+            sourcePassed = 0;
 
             //loops through every node each time
             for(int i = 0; i < graph.getNumNodes(); i++) {
                 //ensures only if there is already a path to it
                 if(distance[i] < Double.MAX_VALUE-1) {
 
+                    if(graph.getNode(i).equals(source)){
+                        sourcePassed = 1;
+                    }
 
                     for (int j = 0; j < graph.getNumLinks(); j++) {
                         //checks if the directed link starts at specified node
@@ -99,6 +107,13 @@ public class Algorithms {
                             if (distance[graph.getLinks().get(j).getNode2().getId()] > (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()])){
                                 //sets equal as the same thing
                                 distance[graph.getLinks().get(j).getNode2().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()]);
+
+                                //doesn't set destination links for source
+                                if(!graph.getNode(i).equals(source)) {
+                                    //getting the links for shortest paths
+                                    links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
+                                }
+
                             }
                         }
 
@@ -109,11 +124,25 @@ public class Algorithms {
                 }
             }
 
-
         }
 
+
+        Graph temp = new Graph();
+
+        //creating new graph to return
+        for(int i = 0; i < graph.getNumNodes(); i++){
+            //adds all the nodes
+            temp.addNode(graph.getNode(i).getName())
+        }
+        for(int i = 0; i < graph.getNumNodes() - 1; i++) {
+            //adds all the links
+            temp.addLink(links[i]);
+        }
+
+        //distance[] contains the values of the shortest paths
+
         //distance should be an array of the shortest path from the source to each corresponding node on the graph
-        return distance;
+        return temp;
     }
 
 
