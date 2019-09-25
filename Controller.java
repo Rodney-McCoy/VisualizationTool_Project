@@ -21,20 +21,13 @@ public class Controller {
 
     public static void makeNode(Scanner in) throws Exception {
         String name;
-        double value;
         if(in.hasNextDouble()){
             in.close();
             throw new Exception("Incorrect syntax for Node's name");
         }else if(in.hasNext()){
             name = in.next();
-            if(in.hasNextDouble()){
-                value = in.nextDouble();
-                in.close();
-                Model.addNode(name, value);
-            }else{
-                in.close();
-                throw new Exception("Incorrect syntax for Node's value");
-            }
+            in.close();
+            Model.addNode(name);
         }else{
             in.close();
             throw new Exception("Incorrect syntax for Node's name");
@@ -130,44 +123,23 @@ public class Controller {
     public static void editNode(Scanner in) throws Exception {
         int id;
         String name;
-        double newValue;
         String newName;
         if(in.hasNextInt()){
             id = in.nextInt();
-            if(in.hasNextDouble()){
-                newValue = in.nextDouble();
-                in.close();
-                Model.editNode(id,newValue);
-            }else if(in.hasNext()){
+            if(in.hasNext()){
                 newName = in.next();
-                if(in.hasNextDouble()){
-                    newValue = in.nextDouble();
-                    in.close();
-                    Model.editNode(id,newName,newValue);
-                }else{
-                    in.close();
-                    Model.editNode(id,newName);
-                }
+                in.close();
+                Model.editNode(id,newName);
             }else{
                 in.close();
                 throw new Exception("Incorrect syntax for Node's new name or value");
             }
         }else if(in.hasNext()){
             name = in.next();
-            if(in.hasNextDouble()){
-                newValue = in.nextDouble();
-                in.close();
-                Model.editNode(name,newValue);
-            }else if(in.hasNext()){
+            if(in.hasNext()){
                 newName = in.next();
-                if(in.hasNextDouble()){
-                    newValue = in.nextDouble();
-                    in.close();
-                    Model.editNode(name,newName,newValue);
-                }else{
-                    in.close();
-                    Model.editNode(name,newName);
-                }
+                in.close();
+                Model.editNode(name,newName);
             }else{
                 in.close();
                 throw new Exception("Incorrect syntax for Node's new name or value");

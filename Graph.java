@@ -15,11 +15,11 @@ public class Graph {
         this.numLinks = 0;
     }
 
-    public void addNode(String name, double value) throws Exception {
+    public void addNode(String name) throws Exception {
         if(getNode(name) != null){
             throw new Exception("Node with same name already exists");
         }
-        Node node = new Node(name, numNodes, value);
+        Node node = new Node(name, numNodes);
         nodes.add(node);
         numNodes++;
     }

@@ -12,11 +12,11 @@ public class Model {
         numGraphs++;
     }
 
-    public static void addNode(String name, double value) throws Exception {
+    public static void addNode(String name) throws Exception {
         if(numGraphs == 0){
             addGraph();
         }
-        graphs.get(currGraph).addNode(name, value);
+        graphs.get(currGraph).addNode(name);
     }
 
     public static void addLink(double value, String name1, String name2) throws Exception {
@@ -53,34 +53,14 @@ public class Model {
         graphs.get(currGraph).removeLink(id1, id2);
     }
 
-    public static void editNode(String name, String newName, double newValue) throws Exception {
-        checkNumGraphs();
-        graphs.get(currGraph).editNode(name,newName,newValue);
-    }
-
     public static void editNode(String name, String newName) throws Exception {
         checkNumGraphs();
         graphs.get(currGraph).editNode(name,newName);
     }
 
-    public static void editNode(String name, double newValue) throws Exception {
-        checkNumGraphs();
-        graphs.get(currGraph).editNode(name,newValue);
-    }
-
-    public static void editNode(int id, String newName, double newValue) throws Exception {
-        checkNumGraphs();
-        graphs.get(currGraph).editNode(id,newName,newValue);
-    }
-
     public static void editNode(int id, String newName) throws Exception {
         checkNumGraphs();
         graphs.get(currGraph).editNode(id,newName);
-    }
-
-    public static void editNode(int id, double newValue) throws Exception {
-        checkNumGraphs();
-        graphs.get(currGraph).editNode(id,newValue);
     }
 
     public static void editLink(String name1, String name2, double newValue) throws Exception {
