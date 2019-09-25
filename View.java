@@ -1,5 +1,3 @@
-package VisualizationTool_Project;
-
 import java.util.Scanner;
 
 public class View {
@@ -28,8 +26,8 @@ public class View {
             switch (choice){
                 case 1:
                     System.out.println("Make Node");
-                    System.out.println("Enter a name for the new Node\n" +
-                                       "Ex. testNode");
+                    System.out.println("Enter a name for the Node followed by its value\n" +
+                                       "Ex. testNode 14");
                     userInput = in.nextLine();
                     try{
                         Controller.makeNode(new Scanner(userInput));
@@ -78,8 +76,9 @@ public class View {
                     break;
                 case 5:
                     System.out.println("Edit Node");
-                    System.out.println("Enter a name or id of the Node then a new name\n" +
-                                       "Ex. testNode newName OR 0 newName");
+                    System.out.println("Enter a name or id of the Node then a new\n" +
+                                       "name, value, or both\n" +
+                                       "Ex. testNode newName 34 OR 0 newName 34");
                     userInput = in.nextLine();
                     try{
                         Controller.editNode(new Scanner(userInput));
