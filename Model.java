@@ -1,5 +1,3 @@
-package VisualizationTool_Project;
-
 import java.util.ArrayList;
 
 /**
@@ -167,5 +165,13 @@ public class Model {
         if(numGraphs == 0){
             throw new Exception("No graphs exist");
         }
+    }
+
+    public static void printFloydWarshall() {
+        Algorithms.FloydWarshall(graphs.get(currGraph));
+    }
+
+    public static void bellmanFord(String in) throws Exception {
+        System.out.print(Algorithms.bellmanFord(graphs.get(currGraph), graphs.get(currGraph).getNode(in)));
     }
 }

@@ -1,30 +1,40 @@
-package VisualizationTool_Project;
-
 public class Algorithms {
 
     private static final double INF = Double.POSITIVE_INFINITY;
 
+    /**
+     * FloydWarshall- creates a matrix of shortest distances from each node to each node
+     * @param graph- (Graph)- contains all information on nodes and edges
+     * @return - a double array of all the shortest distances.
+     */
     public static double[][] FloydWarshall(Graph graph){
         //make adjacency matrix
-        double matrix[][] = new double[graph.getNumNodes()][];
+        double matrix[][] = new double[graph.getNumNodes()][graph.getNumNodes()];
 
         //Initialize matrix distances
         for (int i = 0; i < graph.getNumNodes(); ++i) {
             for (int j = 0; j < graph.getNumNodes(); ++j) {
                 matrix[i][j] = INF;
             }
-            System.out.print("\n");
         }
 
         //fill matrix with graph data
         for(int i = 0; i < graph.getNumNodes(); ++i) {
             for (int j = 0; j < graph.getNumLinks(); ++j) {
-                if(i == graph.getLinks().get(j).getNode1().getId()){
-                    matrix[i][graph.getLinks().get(j).getNode2().getId()] = graph.getLinks().get(j).getValue();
+
+                int node1 = graph.getLinks().get(j).getNode1().getId();
+                int node2 = graph.getLinks().get(j).getNode2().getId();
+                if(i == node1){
+
+                    matrix[node1][node2] = graph.getLinks().get(j).getValue();
+
+                    //mirror since it is an undirected graph
+                    matrix[node2][node1]= graph.getLinks().get(j).getValue();
                 }
             }
         }
         //print adjacency matrix for testing purposes
+        System.out.println("User Input as Adjacency Matrix:");
         printMatrix(matrix, graph.getNumNodes());
 
         int V = matrix.length;
@@ -37,7 +47,7 @@ public class Algorithms {
             }
         }
 
-        //run core algorithm
+        //run core algorithm ( used code from https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/)
         for (int k = 0; k < V; ++k) {
             for (int i = 0; i < V; ++i) {
                 for (int j = 0; j < V; ++j) {
@@ -50,12 +60,17 @@ public class Algorithms {
         }
 
         //print distances matrix for testing and return dist for future use
+        System.out.println("Shortest Distance Matrix:");
         printMatrix(dist, V);
         return dist;
     }
 
+    /**
+     * printMatrix- prints a double array in the form of a readable matrix (each line is a new node, each column is the distance to that node)
+     * @param matrix - array to print
+     * @param numNodes - length of array
+     */
     private static void printMatrix(double[][] matrix, int numNodes){
-        System.out.println("Shortest distance matrix:");
         for (int i = 0; i < numNodes; ++i) {
             for (int j = 0; j < numNodes; ++j) {
                 if (matrix[i][j] == INF) {
@@ -66,17 +81,25 @@ public class Algorithms {
             }
             System.out.print("\n");
         }
+        System.out.print("\n");
     }
 
 
+    /**
+     * bellmanFord - Finds all the shortest paths from a start node to all other nodes.  Deletes edges that are not a part of this graph
+     * @param graph- (Graph) contains all node and edge info
+     * @param source- Starting node to find shortest paths
+     * @return - Graph that contains all shortest paths
+     * @throws Exception
+     */
     public static Graph bellmanFord(Graph graph, Node source) throws Exception {
         double[] distance = new double[graph.getNumNodes()];
 
 
-        Link[] links = new Link[graph.getNumLinks() - 1];
+        Link[] links = new Link[graph.getNumNodes() - 1];
 
         //Set all weights to "infinite" except for source to source
-        for(int i = 1; i< graph.getNumNodes(); i++){
+        for(int i = 0; i< graph.getNumNodes(); i++){
             if(graph.getNode(i).equals(source)){
                 distance[i] = 0;
             }
@@ -110,7 +133,7 @@ public class Algorithms {
                                 distance[graph.getLinks().get(j).getNode2().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()]);
 
                                 //doesn't set destination links for source
-                                if(!graph.getNode(i).equals(source)) {
+                                if(!graph.getLinks().get(j).getNode2().equals(source)) {
                                     //getting the links for shortest paths
                                     links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
                                 }

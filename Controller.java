@@ -1,5 +1,3 @@
-package VisualizationTool_Project;
-
 import java.util.Scanner;
 
 public class Controller {
@@ -201,5 +199,23 @@ public class Controller {
 
     public static void printGraph() throws Exception {
         Model.printGraph();
+    }
+
+    public static void printFloydWarshall() {
+        Model.printFloydWarshall();
+    }
+
+    public static void bellmanFord(Scanner in) throws Exception{
+
+        if(in.hasNextDouble()){
+            throw new Exception("Incorrect syntax for source node");
+        }else if(in.hasNext()){
+            Model.bellmanFord(in.next());
+            in.close();
+        }else{
+            in.close();
+            throw new Exception("No input read for source node");
+        }
+
     }
 }

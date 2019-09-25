@@ -1,5 +1,3 @@
-package VisualizationTool_Project;
-
 /**
  * A Link connects two Nodes and has a value associated with it
  */
