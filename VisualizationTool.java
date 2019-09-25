@@ -1,5 +1,3 @@
-package VisualizationTool_Project;
-
 import java.util.Scanner;
 
 public class VisualizationTool {

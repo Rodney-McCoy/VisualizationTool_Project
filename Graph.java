@@ -86,6 +86,22 @@ public class Graph {
         numLinks++;
     }
 
+    public void addLink(Link link) throws Exception {
+        Node node1 = link.getNode1();
+        if(node1 == null){
+            throw new Exception("Node one does not exist");
+        }
+        Node node2 = link.getNode2();
+        if(node2 == null){
+            throw new Exception("Node two does not exist");
+        }
+        if(getLink(link.getNode1().getName(), link.getNode2().getName()) != null){
+            throw new Exception("Link already exists");
+        }
+        links.add(link);
+        numLinks++;
+    }
+
     /**
      * Removes a Node from the Graph given it's name
      * @param name the name of the Node to remove
@@ -372,15 +388,15 @@ public class Graph {
     @Override
     public String toString() {
         String finalString = "";
-        finalString = finalString.concat("____Nodes_____\n");
-        finalString = finalString.concat("Name     ID\n");
-        finalString = finalString.concat("-------- --\n");
+        finalString = finalString.concat("______Nodes_______\n");
+        finalString = finalString.concat("Name     ID Val\n");
+        finalString = finalString.concat("-------- -- ------\n");
         for(Node n: nodes){
             finalString = finalString.concat(n.toString() + "\n");
         }
 
         finalString = finalString.concat("\n");
-        finalString = finalString.concat("____Links_____\n");
+        finalString = finalString.concat("______Links_______\n");
         finalString = finalString.concat("Link    Val\n");
         finalString = finalString.concat("------- ------\n");
         for(Link l: links){

@@ -21,6 +21,7 @@ public class Controller {
 
     public static void makeNode(Scanner in) throws Exception {
         String name;
+        double value;
         if(in.hasNextDouble()){
             in.close();
             throw new Exception("Incorrect syntax for Node's name");
@@ -123,6 +124,7 @@ public class Controller {
     public static void editNode(Scanner in) throws Exception {
         int id;
         String name;
+        double newValue;
         String newName;
         if(in.hasNextInt()){
             id = in.nextInt();
@@ -132,7 +134,7 @@ public class Controller {
                 Model.editNode(id,newName);
             }else{
                 in.close();
-                throw new Exception("Incorrect syntax for Node's new name or value");
+                throw new Exception("Incorrect syntax for Node's new name");
             }
         }else if(in.hasNext()){
             name = in.next();
@@ -142,7 +144,7 @@ public class Controller {
                 Model.editNode(name,newName);
             }else{
                 in.close();
-                throw new Exception("Incorrect syntax for Node's new name or value");
+                throw new Exception("Incorrect syntax for Node's new name");
             }
         }else{
             in.close();

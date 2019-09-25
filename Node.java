@@ -1,18 +1,14 @@
 package VisualizationTool_Project;
 
-/**
- * A Node represents a point in a graph with a name and id
- */
 public class Node {
     private String name;
     private int id;
+    private double value;
 
-    /**
-     * Default Node constructor sets name to "Default Node" and id to 0
-     */
     public Node(){
         this.name = "Default Node";
         this.id = 0;
+        this.value = 0;
     }
 
     /**
@@ -23,6 +19,11 @@ public class Node {
     public Node(String name, int id){
         this.name = name;
         this.id = id;
+        this.value = value;
+    }
+
+    public double getValue() {
+        return value;
     }
 
     /**
@@ -57,11 +58,11 @@ public class Node {
      * @return True if both Nodes have the same name, False otherwise
      */
     public boolean equals(Node node) {
-        return this.name.equals(node.name);
+        return this.name.equals(node.name) && this.value == node.value;
     }
 
     @Override
     public String toString() {
-        return String.format("%-8.8s %-2d", this.name, this.id);
+        return String.format("%-8.8s %-2d %-3.2f", this.name, this.id, this.value);
     }
 }
