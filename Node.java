@@ -1,14 +1,20 @@
-package VisualizationTool_Project;
+//package VisualizationTool_Project;
 
 public class Node {
     private String name;
     private int id;
     private double value;
 
+
+    private int xPos;
+    private int yPos;
+
     public Node(){
         this.name = "Default Node";
         this.id = 0;
         this.value = 0;
+        this.xPos = 50;
+        this.yPos = 50;
     }
 
     /**
@@ -16,15 +22,24 @@ public class Node {
      * @param name Name of Node used to disallow duplicate Nodes
      * @param id Id of Node used to locate the Node within a list
      */
-    public Node(String name, int id){
+    public Node(String name, int id, int x, int y){
         this.name = name;
         this.id = id;
         this.value = value;
+        this.xPos = x;
+        this.yPos = y;
     }
 
     public double getValue() {
         return value;
     }
+
+
+    public int getxPos() { return xPos; }
+    public int getyPos() { return yPos; }
+
+    public void setxPos(int newX) { this.xPos = newX; }
+    public void setyPos(int newY) { this.yPos = newY; }
 
     /**
      * Returns the ID of the current Node
