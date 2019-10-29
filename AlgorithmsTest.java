@@ -51,7 +51,7 @@ class AlgorithmsTest {
             graph.removeLink("1", "6");
 
         } catch (Exception e){
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
     }
 
@@ -89,7 +89,25 @@ class AlgorithmsTest {
     }
 
     @org.junit.jupiter.api.Test
-    void dijkstra() {
+    void dijkstra() throws Exception {
+
+        boolean testPassed;
+
+        Graph solution = new Graph();
+
+        solution.setNodes(graph.getNodes());
+
+        try{
+            solution.addLink(graph.getLink("1","2"));
+            solution.addLink(graph.getLink("2","4"));
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
+        Graph result = Algorithms.dijkstra(graph,0,3);
+
+
+
     }
 
     @org.junit.jupiter.api.Test
