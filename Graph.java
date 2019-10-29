@@ -42,7 +42,7 @@ public class Graph {
      * @param yPos yPosition on graph
      */
     public void addNode(int xPos, int yPos) {
-        String name = "Node"+(numNodes-1);
+        String name = "Node"+(numNodes);
         Node node = new Node(name, numNodes, xPos, yPos);
         nodes.add(node);
         numNodes++;
