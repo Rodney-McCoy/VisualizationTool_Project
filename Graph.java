@@ -1,4 +1,4 @@
-package VisualizationTool_Project;
+//package VisualizationTool_Project;
 
 import java.util.ArrayList;
 
@@ -32,6 +32,18 @@ public class Graph {
             throw new Exception("Node with same name already exists");
         }
         Node node = new Node(name, numNodes);
+        nodes.add(node);
+        numNodes++;
+    }
+
+    /**
+     * Creates and adds a new Node to the Graph
+     * @param xPos xPosition on graph
+     * @param yPos yPosition on graph
+     */
+    public void addNode(int xPos, int yPos) {
+        String name = "Node"+(numNodes-1);
+        Node node = new Node(name, numNodes, xPos, yPos);
         nodes.add(node);
         numNodes++;
     }
