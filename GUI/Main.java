@@ -5,8 +5,13 @@ import java.lang.Thread;
 
 public class Main {
 
+    /**
+     * main- runs the GUI
+     * @param args - none
+     */
     public static void main(String[] args) {
-        JFrame userFrame = new JFrame("Shortest Path Algorithms");
+        JFrame userFrame = new
+        JFrame("Shortest Path Algorithms");
         Gui userGui = new Gui();
 
         SwingUtilities.invokeLater(new Runnable() {
@@ -22,13 +27,17 @@ public class Main {
                 try {
                     Thread.sleep(100);
                 } catch (Exception e) {
+                    System.out.println("Error in main run: " + e);
                 }
             }
         });
-        DrawingPanel panel = new DrawingPanel(500,500);
+        DrawingPanel panel = new DrawingPanel(700,500);
         Graphics2D g = panel.getGraphics();
         AnimationArea drawing = new AnimationArea();
-        drawing.animate(g, panel, userGui);
+        Graph userGraph = new Graph();
+        drawing.animate(g, panel, userGui, userGraph);
+
+        //close everything
         panel.closeWindow();
         userFrame.dispose();
     }

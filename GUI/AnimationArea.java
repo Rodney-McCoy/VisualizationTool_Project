@@ -7,6 +7,12 @@ public class AnimationArea {
 
     private final int nodeDiameter = 50;
 
+    /**
+     * paintNode- simple draw funtion for a circle
+     * @param g- graphics
+     * @param x- x loc
+     * @param y - y loc
+     */
     public void paintNode(Graphics g, int x, int y){
         g.fillOval(x, y, nodeDiameter,nodeDiameter);
     }
@@ -24,7 +30,7 @@ public class AnimationArea {
 
         while(gui.exit != 1) {
             panel.copyGraphicsToScreen();
-            panel.setBackground(Color.WHITE);
+            //panel.setBackground(Color.WHITE);
             drawNodes(g, graph);
             drawEdges(g, graph);
 
@@ -54,9 +60,10 @@ public class AnimationArea {
                 //        then print out the line from first node x,y and second node x,y
                 //Proof of Concept:
                 if (panel.mouseClickHasOccurred(0)) {
+                    g.setColor(Color.BLACK);
                     int firstX = panel.getMouseClickX(0);
                     int firstY = panel.getMouseClickY(0);
-                    //findNode(firstX, firstY, graph);
+
                     while(!panel.mouseClickHasOccurred(0) && gui.setting == 2) {
                         try {
                             Thread.sleep(100);
@@ -79,7 +86,7 @@ public class AnimationArea {
                 //Proof of Concept:
                 if(panel.mouseClickHasOccurred(0)){
                     g.setColor(Color.WHITE);
-                    paintNode(g, panel.getMouseClickX(0), panel.getMouseClickY(0));
+                    paintNode(g, panel.getMouseClickX(0) - this.nodeDiameter/2, panel.getMouseClickY(0) - this.nodeDiameter/2);
                 }
             }
         }
@@ -94,7 +101,7 @@ public class AnimationArea {
         //iterate through every node in graph, draw to graphics
         for(int i = 0; i < graph.getNumNodes(); ++i){
             g.setColor(Color.RED);
-            g.fillOval(graph.nodes.get(i).xPos - this.nodeDiameter/2, graph.nodes.get(i).yPos - this.nodeDiameter/2, this.nodeDiameter, this.nodeDiameter);
+            g.fillOval(graph.getNodes().get(i).xPos - this.nodeDiameter/2, graph.getNodes().get(i).yPos - this.nodeDiameter/2, this.nodeDiameter, this.nodeDiameter);
         }
     }
 
@@ -108,7 +115,7 @@ public class AnimationArea {
         //start x = node1, start y = node2
         for(int i = 0; i < graph.getNumLinks(); ++i){
             g.setColor(Color.BLACK);
-            g.drawLine(graph.links.get(i).getNode1().xPos, graph.links.get(i).getNode1().yPos, graph.links.get(i).getNode2().xPos,graph.links.get(i).getNode2().yPos);
+            g.drawLine(graph.getLinks().get(i).getNode1().xPos, graph.getLinks().get(i).getNode1().yPos, graph.getLinks().get(i).getNode2().xPos,graph.getLinks().get(i).getNode2().yPos);
         }
     }
 
@@ -120,9 +127,9 @@ public class AnimationArea {
      * @return - -1 if mouse is on no node, else returns node index
      */
     private int findNode(int x, int y, Graph graph){
-        for(int i = 0; i < graph.nodes.size(); ++i){
-            if(this.nodeDiameter > Math.abs(x - (graph.nodes.get(i).xPos))){
-                if(this.nodeDiameter > Math.abs(y - (graph.nodes.get(i).yPos))){
+        for(int i = 0; i < graph.getNodes().size(); ++i){
+            if(this.nodeDiameter > Math.abs(x - (graph.getNodes().get(i).xPos))){
+                if(this.nodeDiameter > Math.abs(y - (graph.getNodes().get(i).yPos))){
                     return i;
                 }
             }
