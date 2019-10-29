@@ -7,12 +7,6 @@ public class AnimationArea {
 
     private final int nodeDiameter = 50;
 
-    /**
-     * paintNode- simple draw funtion for a circle
-     * @param g- graphics
-     * @param x- x loc
-     * @param y - y loc
-     */
     public void paintNode(Graphics g, int x, int y){
         g.fillOval(x, y, nodeDiameter,nodeDiameter);
     }
@@ -25,12 +19,12 @@ public class AnimationArea {
      * @param graph- graph that will be drawn on panel
      */
 
-    public void animate(Graphics g, DrawingPanel panel, Gui gui, Graph graph){
+    public void animate(Graphics g, DrawingPanel panel, Gui gui, Graph graph) throws Exception {
         panel.setBackground(Color.WHITE);
 
         while(gui.exit != 1) {
             panel.copyGraphicsToScreen();
-            //panel.setBackground(Color.WHITE);
+            panel.setBackground(Color.WHITE);
             drawNodes(g, graph);
             drawEdges(g, graph);
 
@@ -60,10 +54,9 @@ public class AnimationArea {
                 //        then print out the line from first node x,y and second node x,y
                 //Proof of Concept:
                 if (panel.mouseClickHasOccurred(0)) {
-                    g.setColor(Color.BLACK);
                     int firstX = panel.getMouseClickX(0);
                     int firstY = panel.getMouseClickY(0);
-
+                    //findNode(firstX, firstY, graph);
                     while(!panel.mouseClickHasOccurred(0) && gui.setting == 2) {
                         try {
                             Thread.sleep(100);
@@ -79,14 +72,24 @@ public class AnimationArea {
             if(gui.setting == 3){
                 //Delete node or Edge
                 //should: Check mouse click proximity to node
-                //            if close, delete node
-                //        Then if not on node, check proximity to edge
-                //        Check normalized vector from node xy to mouse xy.  then check if magnitude is smaller
-                //            if angle is similiar and magnitude smaller, delete edge
+                int num = findNode(panel.getMouseClickX(0), panel.getMouseClickY(0), graph);
+                if(num != -1) {
+                    //            if close, delete node
+                    graph.removeNode(num);
+                }else {
+                    //        Then if not on node, check proximity to edge
+                    num = findEdge(panel.getMouseClickX(0), panel.getMouseClickY(0), graph);
+                    //        Check normalized vector from node xy to mouse xy.  then check if magnitude is smaller
+                    //            if angle is similiar and magnitude smaller, delete edge
+                    if(num != -1){
+                        graph.removeLink(graph.getLinks().get(num).getNode1().getId(), graph.getLinks().get(num).getNode2().getId());
+                    }
+                }
+
                 //Proof of Concept:
                 if(panel.mouseClickHasOccurred(0)){
                     g.setColor(Color.WHITE);
-                    paintNode(g, panel.getMouseClickX(0) - this.nodeDiameter/2, panel.getMouseClickY(0) - this.nodeDiameter/2);
+                    paintNode(g, panel.getMouseClickX(0), panel.getMouseClickY(0));
                 }
             }
         }
@@ -135,6 +138,24 @@ public class AnimationArea {
             }
         }
         return -1;
+    }
+
+    private int findEdge(int x, int y, Graph graph){
+        int link = -1;
+        for(int i =0; i<graph.getNumLinks(); i++){
+
+            Vector330Class link_1 = new Vector330Class(graph.getLinks().get(i).getNode1().xPos-graph.getLinks().get(i).getNode2().xPos, graph.getLinks().get(i).getNode1().yPos-graph.getLinks().get(i).getNode2().yPos);
+            Vector330Class link_2 = link_1.scale(-1);
+            Vector330Class mouse = new Vector330Class(x-graph.getLinks().get(i).getNode1().xPos, y-graph.getLinks().get(i).getNode1().yPos);
+
+            if(mouse.magnitude() < link_1.magnitude()){
+                if(mouse.normalize().equals(link_1.normalize()) || mouse.normalize().equals(link_2.normalize())){
+                    link = i;
+                }
+            }
+
+        }
+        return link;
     }
 
 }
