@@ -97,7 +97,7 @@ class AlgorithmsTest {
     @org.junit.jupiter.api.Test
     void dijkstra() throws Exception {
 
-        boolean testPassed;
+        boolean testPass = true;
 
         Graph solution = new Graph();
 
@@ -106,13 +106,41 @@ class AlgorithmsTest {
         try{
             solution.addLink(graph.getLink("1","2"));
             solution.addLink(graph.getLink("2","4"));
+
+            Graph result = Algorithms.dijkstra(graph,0,3);
+
+            //Links contain a value and the two nodes it links therefor if all the links are equal the graphs are equal
+            ArrayList<Link> testLinks = result.getLinks();
+            ArrayList<Link> solutionLinks = solution.getLinks();
+
+            for (int i = 0; i < graph.getNumNodes() - 1; ++i) {
+
+                //checks if the values/weights of the links are the same
+                if (testLinks.get(i).getValue() != solutionLinks.get(i).getValue()){
+                    testPass = false;
+                }
+                //checks if the links first node is the same for both graphs
+                if (testLinks.get(i).getNode1() != solutionLinks.get(i).getNode1()){
+                    testPass = false;
+                    //this fixes the issue where a graph could have assigned the two nodes n1, n2 or n2, n1.
+                    if (testLinks.get(i).getNode2() != solutionLinks.get(i).getNode1()){
+                        testPass= true;
+                    }
+                }
+                //repeat for the second node.
+                if (testLinks.get(i).getNode2() != solutionLinks.get(i).getNode2()){
+                    testPass = false;
+                    if (testLinks.get(i).getNode2() != solutionLinks.get(i).getNode1()){
+                        testPass= true;
+                    }
+                }
+            }
+
+            assert(testPass);
+
         }catch(Exception e){
             System.out.println(e.getMessage());
         }
-
-        Graph result = Algorithms.dijkstra(graph,0,3);
-
-
 
     }
 
@@ -148,7 +176,7 @@ class AlgorithmsTest {
             ArrayList<Link> testLinks = testGraph.getLinks();
             ArrayList<Link> solutionLinks = solutionGraph.getLinks();
 
-            //5 is numNodes - 1
+            //Iterates through numNodes - 1
             for (int i = 0; i < graph.getNumNodes() - 1; ++i) {
 
                 //checks if the values/weights of the links are the same
