@@ -58,6 +58,33 @@ class AlgorithmsTest {
     @org.junit.jupiter.api.Test
     void floydWarshall() {
 
+        boolean testPassed = true;
+
+        double matrix[][] = Algorithms.FloydWarshall(graph);
+
+        double solution[][] =
+                {{6,5,3,9,7,10},
+                {5,8,8,4,12,7},
+                {3,8,6,12,4,10},
+                {9,4,12,6,9,3},
+                {7,12,4,9,8,6},
+                {10,7,10,3,6,6}};
+
+            for (int i = 0; i < 6; ++ i){
+
+                for (int j = 0; j < 6; ++ j){
+
+                    if (matrix[i][j] != solution[i][j]){
+                            testPassed = false;
+                    }
+
+
+                }
+            }
+
+            assert(testPassed);
+            //assertEquals(testPassed);
+
 
     }
 
