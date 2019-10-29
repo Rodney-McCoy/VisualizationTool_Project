@@ -2,16 +2,16 @@
 VisualizationTool_Project
 =========================
 
+The old folder contains code implimented form Sprint 1 that was not used in this sprint (MVC)
+
 Two additions were made to this project in this Sprint:
 
-The GUI folder contains a main to the proof of concept GUI for the visualization tool
-These files need to be run with node, graph, and link .java files.  There were complications
-when trying to connect this GUI to the MVC as changes need to be made to the MVC.  The GUI is
-runnable and shows a visualization of how we hope the code to work. Source code comments explain
-how the actual functionality is intended to be implimented.  A few methods were created as expected,
-when abondoning the MVC framework.
+Main.java runs the GUI that serves as a proof of concept GUI for our sprint. It does not need
+the files in the old folder to run. There were difficulties when trying to connect this GUI to 
+the MVC so we decided not to use it as its creator was unable to help with this sprint.  The GUI 
+shows a visualization of how we hope the code to work. Source code comments explain
+how the actual functionality is intended to be implimented.
 
 The AlgorithmsTest.java includes junits tests of the algorithms in Algorithms.java. 
   
-
 In summary, there are 2 runnables: Main.java in the GUI folder and AlgorithmsTest.java.
