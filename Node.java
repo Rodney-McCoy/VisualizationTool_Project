@@ -3,12 +3,14 @@
 public class Node {
     private String name;
     private int id;
-    private double value;
+    int xPos;
+    int yPos;
 
     public Node(){
         this.name = "Default Node";
         this.id = 0;
-        this.value = 0;
+        this.xPos = 0;
+        this.yPos = 0;
     }
 
     /**
@@ -19,12 +21,23 @@ public class Node {
     public Node(String name, int id){
         this.name = name;
         this.id = id;
-        this.value = value;
+        this.xPos = 0;
+        this.yPos = 0;
     }
 
-    public double getValue() {
-        return value;
+    /**
+     * Node constructor that sets parameters
+     * @param name Name of Node used to disallow duplicate Nodes
+     * @param id Id of Node used to locate the Node within a list
+     * @param
+     */
+    public Node(String name, int id, int xPos, int yPos){
+        this.name = name;
+        this.id = id;
+        this.xPos = xPos;
+        this.yPos = yPos;
     }
+
 
     /**
      * Returns the ID of the current Node
@@ -58,11 +71,11 @@ public class Node {
      * @return True if both Nodes have the same name, False otherwise
      */
     public boolean equals(Node node) {
-        return this.name.equals(node.name) && this.value == node.value;
+        return this.name.equals(node.name);
     }
 
     @Override
     public String toString() {
-        return String.format("%-8.8s %-2d %-3.2f", this.name, this.id, this.value);
+        return String.format("%-8.8s %-2d", this.name, this.id);
     }
 }

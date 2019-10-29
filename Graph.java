@@ -37,6 +37,18 @@ public class Graph {
     }
 
     /**
+     * Creates and adds a new Node to the Graph
+     * @param xPos xPosition on graph
+     * @param yPos yPosition on graph
+     */
+    public void addNode(int xPos, int yPos) {
+        String name = "Node"+(numNodes);
+        Node node = new Node(name, numNodes, xPos, yPos);
+        nodes.add(node);
+        numNodes++;
+    }
+
+    /**
      * Makes a new Link using Node names and adds it to the Graph
      * @param value the value of the new Link
      * @param name1 the name of the second Node connected to the Link
