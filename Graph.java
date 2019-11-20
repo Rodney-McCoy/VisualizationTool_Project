@@ -146,7 +146,7 @@ public class Graph {
             throw new Exception("Node does not exist");
         }
         nodes.remove(node.getId());
-        for(int i = 0; i < numLinks; i++){
+        for(int i = numLinks - 1; i > -1; i--){
             if(links.get(i).containsNode(node)){
                 links.remove(i);
                 numLinks--;
@@ -186,7 +186,7 @@ public class Graph {
         if(link == null){
             throw new Exception("Link does not exist");
         }
-        for(int i = 0; i < numLinks; i++){
+        for(int i = numLinks - 1; i > -1; i--){
             if(links.get(i).equals(link)){
                 links.remove(i);
                 numLinks--;
