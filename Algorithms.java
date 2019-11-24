@@ -1,8 +1,4 @@
-//package VisualizationTool_Project;
-
 public class Algorithms {
-
-    private static final double INF = Double.POSITIVE_INFINITY;
 
     /**
      * FloydWarshall- creates a matrix of shortest distances from each node to each node
@@ -14,56 +10,46 @@ public class Algorithms {
         double matrix[][] = new double[graph.getNumNodes()][graph.getNumNodes()];
 
         //Initialize matrix distances
-        for (int i = 0; i < graph.getNumNodes(); ++i) {
-            for (int j = 0; j < graph.getNumNodes(); ++j) {
-                matrix[i][j] = INF;
+        for (int i = 0; i < matrix.length; ++i) {
+            for (int j = 0; j < matrix[i].length; ++j) {
+                matrix[i][j] = Double.POSITIVE_INFINITY;
             }
         }
 
         //fill matrix with graph data
-        for(int i = 0; i < graph.getNumNodes(); ++i) {
+        for (int i = 0; i < graph.getNumNodes(); ++i) {
             for (int j = 0; j < graph.getNumLinks(); ++j) {
-
                 int node1 = graph.getLinks().get(j).getNode1().getId();
                 int node2 = graph.getLinks().get(j).getNode2().getId();
                 if(i == node1){
-
                     matrix[node1][node2] = graph.getLinks().get(j).getValue();
-
                     //mirror since it is an undirected graph
-                    matrix[node2][node1]= graph.getLinks().get(j).getValue();
+                    matrix[node2][node1] = graph.getLinks().get(j).getValue();
                 }
             }
         }
-        //print adjacency matrix for testing purposes
-        System.out.println("User Input as Adjacency Matrix:");
-        printMatrix(matrix, graph.getNumNodes());
-
         int V = matrix.length;
-        double dist[][] = new double[V][V]; //output matrix
+        double[][] dist = new double[V][V]; //output matrix
 
         //initialize output matrix as input matrix
-        for (int i = 0; i < V; ++i) {
-            for (int j = 0; j < V; ++j) {
+        for (int i = 0; i < dist.length; ++i) {
+            for (int j = 0; j < dist[i].length; ++j) {
                 dist[i][j] = matrix[i][j];
             }
         }
 
-        //run core algorithm ( used code from https://www.geeksforgeeks.org/floyd-warshall-algorithm-dp-16/)
-        for (int k = 0; k < V; ++k) {
-            for (int i = 0; i < V; ++i) {
-                for (int j = 0; j < V; ++j) {
-
+        for (int k = 0; k < dist.length; ++k) {
+            for (int i = 0; i < dist.length; ++i) {
+                for (int j = 0; j < dist[i].length; ++j) {
                     if (dist[i][k] + dist[k][j] < dist[i][j]) {
                         dist[i][j] = dist[i][k] + dist[k][j];
+                        if(i == j){
+                            dist[i][j] = 0;
+                        }
                     }
                 }
             }
         }
-
-        //print distances matrix for testing and return dist for future use
-        System.out.println("Shortest Distance Matrix:");
-        printMatrix(dist, V);
         return dist;
     }
 
@@ -75,7 +61,7 @@ public class Algorithms {
     private static void printMatrix(double[][] matrix, int numNodes){
         for (int i = 0; i < numNodes; ++i) {
             for (int j = 0; j < numNodes; ++j) {
-                if (matrix[i][j] == INF) {
+                if (matrix[i][j] == Double.POSITIVE_INFINITY) {
                     System.out.print("INF\t");
                 } else {
                     System.out.printf("%.1f\t", matrix[i][j]);
@@ -109,7 +95,7 @@ public class Algorithms {
         Graph shortest = new Graph();
 
         for (int i = 0; i < numNodes; i++) {
-            distance[i] = INF;
+            distance[i] = Double.POSITIVE_INFINITY;
             parent[i] = startNode;
             visited[i] = false;
         }
@@ -118,7 +104,7 @@ public class Algorithms {
         while(visitedNodes < numNodes){
 
             //Find minimun node not visited yet
-            minV = (int) INF;
+            minV = (int) Double.POSITIVE_INFINITY;
             for (int i = 1; i < numNodes; i++) {
                 if ((distance[i] < minV) && !visited[i]){
                     minI = i;
@@ -132,8 +118,16 @@ public class Algorithms {
 
             //Find and update adjacent nodes
             for (Node node:graph.getNodes()) {
+                //Find a link between the min node and the current node
                 for (Link link:graph.getLinks()) {
-                    if( ((link.getNode1() == graph.getNodes().get(minI) && link.getNode2() == node) || (link.getNode1() == node && link.getNode2() == graph.getNodes().get(minI))) && (distance[minI] + link.getValue() < distance[node.getId()]) ){
+                    //Check if the test node is adjacent to the min node through the current link
+                    //Tests both directions since the graph is undirected
+                    //Also check if the distance to the test node is shorter through the min node
+                    //If so update the distance
+                    if( ((link.getNode1() == graph.getNodes().get(minI) && link.getNode2() == node) ||
+                         (link.getNode1() == node && link.getNode2() == graph.getNodes().get(minI))) &&
+                       (distance[minI] + link.getValue() < distance[node.getId()]) ){
+                        
                         parent[node.getId()] = minI;
                         distance[node.getId()] = distance[minI] + link.getValue();
                         break;
@@ -166,11 +160,8 @@ public class Algorithms {
                 }
             }
         }
-
         return shortest;
-
     }
-
 
     /**
      * bellmanFord - Finds all the shortest paths from a start node to all other nodes.  Deletes edges that are not a part of this graph
@@ -181,8 +172,6 @@ public class Algorithms {
      */
     public static Graph bellmanFord(Graph graph, Node source) throws Exception {
         double[] distance = new double[graph.getNumNodes()];
-
-
         Link[] links = new Link[graph.getNumNodes() - 1];
 
         //Set all weights to "infinite" except for source to source
@@ -191,26 +180,23 @@ public class Algorithms {
                 distance[i] = 0;
             }
             else {
-                distance[i] = INF;
+                distance[i] = Double.POSITIVE_INFINITY;
             }
         }
-
         int sourcePassed = 0;
 
         //max of numNodes - 1 iterations
         for(int x = 1; x < graph.getNumNodes(); x++){
-
             sourcePassed = 0;
 
             //loops through every node each time
             for(int i = 0; i < graph.getNumNodes(); i++) {
-                //ensures only if there is already a path to it
-                if(distance[i] < INF-1) {
 
+                //ensures only if there is already a path to it
+                if(distance[i] < Double.POSITIVE_INFINITY-1) {
                     if(graph.getNode(i).equals(source)){
                         sourcePassed = 1;
                     }
-
                     for (int j = 0; j < graph.getNumLinks(); j++) {
                         //checks if the directed link starts at specified node
                         if (graph.getLinks().get(j).getNode1().equals(graph.getNode(i))) {
@@ -218,29 +204,18 @@ public class Algorithms {
                             if (distance[graph.getLinks().get(j).getNode2().getId()] > (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()])){
                                 //sets equal as the same thing
                                 distance[graph.getLinks().get(j).getNode2().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()]);
-
                                 //doesn't set destination links for source
                                 if(!graph.getLinks().get(j).getNode2().equals(source)) {
                                     //getting the links for shortest paths
                                     links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
                                 }
-
-
                             }
                         }
-
-
                     }
-
-
                 }
             }
-
         }
-
-
         Graph temp = new Graph();
-
         //creating new graph to return
         for(int i = 0; i < graph.getNumNodes(); i++){
             //adds all the nodes
@@ -250,9 +225,7 @@ public class Algorithms {
             //adds all the links
             temp.addLink(links[i]);
         }
-
         //distance[] contains the values of the shortest paths
-
         //distance should be an array of the shortest path from the source to each corresponding node on the graph
         return temp;
     }

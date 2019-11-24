@@ -2,11 +2,8 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import javax.swing.SwingUtilities;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.lang.Thread;
 
 public class Gui extends JFrame{
@@ -22,7 +19,6 @@ public class Gui extends JFrame{
     private JPanel animationPanel;
 
     public int setting = 0;
-    public int exit = 0;
 
     public Gui() {
         feedback.setEnabled(false);
@@ -51,11 +47,17 @@ public class Gui extends JFrame{
         bellmanFordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //run bellmanFord
-                //draw graph returned from bellman Ford in new window
-                feedback.setText("Bellman Ford selected.  Not added yet");
+                JFrame algFrame = new JFrame("Bellman Ford Solution");
+                AlgorithmDisplay algPanel = new AlgorithmDisplay();
+                algFrame.setContentPane(algPanel.mainPanel);
+                algFrame.setLocation(0,0);
+                algFrame.setSize(500,1000);
+                algFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                algFrame.pack();
+                algFrame.setVisible(true);
             }
         });
+
         dijkstraButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -72,54 +74,34 @@ public class Gui extends JFrame{
                 feedback.setText("Floyd-warshall selected.  Not added yet");
             }
         });
-        animationPanel.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
+        animationPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                System.out.println("Press");
-                animationArea1.setMouseClickX(e.getX());
-                animationArea1.setMouseClickY(e.getY());
-                animationArea1.setMouseClicked();
-                //animationArea1.paint(animationArea1.getGraphics());
-                System.out.println("Pr @ "+ e.getX() +", " + e.getY());
-            }
-
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                System.out.println("Re");
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                System.out.println("En");
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                System.out.println("Ex");
+                if(setting == 1){
+                    animationArea1.resetNodes();
+                    animationArea1.createNodes(e.getX(),e.getY());
+                }else if(setting == 2){
+                    animationArea1.createEdges(e.getX(),e.getY());
+                }else if(setting == 3){
+                    animationArea1.resetNodes();
+                    animationArea1.deleteComponents(e.getX(),e.getY());
+                }
             }
         });
-        animationArea1.t.start();
     }
 
     private void createUIComponents() {
-        ImageIcon addNode = new ImageIcon ("addNode.png");
+        ImageIcon addNode = new ImageIcon ("src/addNode.png");
         buttonAddNode = new JButton(addNode);
 
-        ImageIcon addEdge = new ImageIcon("addEdge.png");
+        ImageIcon addEdge = new ImageIcon("src/addEdge.png");
         buttonAddEdge = new JButton(addEdge);
 
-        ImageIcon delete = new ImageIcon("delete.png");
+        ImageIcon delete = new ImageIcon("src/delete.png");
         buttonDelete = new JButton(delete);
 
-        animationArea1 = new AnimationArea(this, new Graph());
+        animationArea1 = new AnimationArea(this.feedback, new Graph());
     }
-
-    public AnimationArea getAnimationArea(){ return animationArea1;}
 
     /**
      * main- runs the GUI
@@ -129,23 +111,11 @@ public class Gui extends JFrame{
         JFrame userFrame = new
                 JFrame("Shortest Path Algorithms");
         Gui userGui = new Gui();
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                userFrame.setContentPane(userGui.userPanel);
-                userFrame.setLocation(0,0);
-                userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                userFrame.pack();
-                //userFrame.enableInitialControls(true);
-                userFrame.setVisible(true);
-
-                try {
-                    Thread.sleep(100);
-                } catch (Exception e) {
-                    System.out.println("Error in main run: " + e);
-                }
-            }
-        });
+        userFrame.setContentPane(userGui.userPanel);
+        userFrame.setLocation(0,0);
+        userFrame.setSize(500,1000);
+        userFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        userFrame.pack();
+        userFrame.setVisible(true);
     }
 }
