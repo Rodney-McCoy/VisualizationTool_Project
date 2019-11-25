@@ -17,14 +17,11 @@ public class AnimationArea extends JPanel{
 
     /**
      * AnimationArea- contructor
-     * @param feedback - Jpanel to send directions to
      * @param graph - what graph is it updating
      */
-    AnimationArea(JTextArea feedback, Graph graph) {
+    AnimationArea(Graph graph) {
         super();
-        this.feedback = feedback;
         this.graph = graph;
-        paint(this.getGraphics());
     }
 
     /**deleteComponents- uses mouse to delete a node or edge
@@ -89,7 +86,7 @@ public class AnimationArea extends JPanel{
                     paint(this.getGraphics());
                     feedback.setText("Edge placed, select 2 nodes to create another edge");
                 } catch (Exception e) {
-                    //feedback.setText("" + e);
+                    feedback.setText("" + e);
                 }
             }
         }
@@ -217,6 +214,10 @@ public class AnimationArea extends JPanel{
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(1000, 1000);
+    }
+
+    public void setFeedback(JTextArea feedback){
+        this.feedback = feedback;
     }
 
 }

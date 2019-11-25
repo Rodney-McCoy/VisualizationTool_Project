@@ -17,16 +17,19 @@ public class AlgorithmDisplay {
 
     public AlgorithmDisplay(Graph userGraph) {
         this.userGraph=userGraph;
+        animationArea2.setFeedback(feedback);
+        feedback.setEnabled(false);
 
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                animationArea2.paint(animationArea2.getGraphics());
                 feedback.setText("Hello");
             }
         });
     }
 
     private void createUIComponents() {
-        animationArea2 = new AnimationArea(this.feedback, userGraph);
+        animationArea2 = new AnimationArea(userGraph);
     }
 }

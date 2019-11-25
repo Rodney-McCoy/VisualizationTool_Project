@@ -23,6 +23,7 @@ public class Gui extends JFrame{
     public int setting = 0;
 
     public Gui() {
+        animationArea1.setFeedback(feedback);
         feedback.setEnabled(false);
         feedback.setDisabledTextColor(Color.BLACK);
         buttonAddNode.addActionListener(new ActionListener() {
@@ -104,7 +105,7 @@ public class Gui extends JFrame{
         ImageIcon delete = new ImageIcon("src/delete.png");
         buttonDelete = new JButton(delete);
 
-        animationArea1 = new AnimationArea(this.feedback, new Graph());
+        animationArea1 = new AnimationArea(new Graph());
     }
 
     /**
