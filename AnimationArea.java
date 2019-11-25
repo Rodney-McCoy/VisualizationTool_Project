@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.security.InvalidParameterException;
 import java.util.Scanner;
 
 public class AnimationArea extends JPanel{
@@ -79,13 +80,13 @@ public class AnimationArea extends JPanel{
                         }
                         graph.addLink(weight, firstNode, secondNode);
 
-                    }catch(Exception e){
+                    }catch(NumberFormatException e){
                         graph.addLink(1, firstNode, secondNode);
                     }
                     resetNodes();
                     paint(this.getGraphics());
                     feedback.setText("Edge placed, select 2 nodes to create another edge");
-                } catch (Exception e) {
+                } catch (IllegalArgumentException e) {
                     feedback.setText("" + e);
                 }
             }

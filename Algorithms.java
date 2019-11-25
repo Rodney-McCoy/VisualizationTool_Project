@@ -78,9 +78,9 @@ public class Algorithms {
      * @param startNode - beginning of the path
      * @param endNode - end of the path
      * @return - a graph containing the links for the path
-     * @throws Exception
+     * @throws ArrayIndexOutOfBoundsException
      */
-    public static Graph dijkstra(Graph graph, int startNode, int endNode) throws Exception {
+    public static Graph dijkstra(Graph graph, int startNode, int endNode) throws ArrayIndexOutOfBoundsException {
 
         int numNodes = graph.getNumNodes();
         int[] reverse = new int[numNodes];

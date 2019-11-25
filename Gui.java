@@ -68,7 +68,37 @@ public class Gui extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //run dijkstra's
                 //draw graph returned from dijkstra's in new window
-                feedback.setText("Dijkstra's selected.  Not added yet");
+
+                try{
+                    char[] startNodeC;
+                    String startNodeS = JOptionPane.showInputDialog(dijkstraButton, "Enter the Char of the Starting Node");
+                    startNodeC = startNodeS.toUpperCase().toCharArray();
+                    if(startNodeC.length != 1){
+                        throw new IllegalArgumentException("Please enter only one character");
+                    }
+                    char[] endNodeC;
+                    String endNodeS = JOptionPane.showInputDialog(dijkstraButton, "Enter the Char of the Ending Node");
+                    endNodeC = endNodeS.toUpperCase().toCharArray();
+                    if(endNodeC.length != 1){
+                        throw new IllegalArgumentException("Please enter only one character");
+                    }
+
+                    JFrame algFrame = new JFrame("Dijkstra's Solution");
+                    AlgorithmDisplay algPanel = new AlgorithmDisplay(Algorithms.dijkstra(animationArea1.getGraph(),
+                            startNodeC[0] - 65, endNodeC[0] - 65));
+                    algFrame.setContentPane(algPanel.mainPanel);
+                    algFrame.setLocation(0,0);
+                    algFrame.setSize(500,500);
+                    algFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    algFrame.pack();
+                    algFrame.setVisible(true);
+
+                }catch (ArrayIndexOutOfBoundsException ex){
+                    System.out.println(ex);
+                    System.out.println("Either the starting or ending nodes don't exist");
+                }
+
+                //feedback.setText("Dijkstra's selected.  Not added yet");
             }
         });
         floydWarshallButton.addActionListener(new ActionListener() {
