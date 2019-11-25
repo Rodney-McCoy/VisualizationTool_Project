@@ -196,9 +196,6 @@ public class Algorithms {
 
                 //ensures only if there is already a path to it
                 if(distance[i] < Double.POSITIVE_INFINITY-1) {
-                    if(graph.getNode(i).equals(source)){
-                        sourcePassed = 1;
-                    }
                     for (int j = 0; j < graph.getNumLinks(); j++) {
                         //checks if the directed link starts at specified node
                         if (graph.getLinks().get(j).getNode1().equals(graph.getNode(i))) {
@@ -209,21 +206,23 @@ public class Algorithms {
                                 //doesn't set destination links for source
                                 if(!graph.getLinks().get(j).getNode2().equals(source)) {
                                     //getting the links for shortest paths
-                                    links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
+                                    links[numAddedLinks] = graph.getLinks().get(j);
                                     numAddedLinks++;
                                 }
                             }
                         }
-                        else if(graph.getLinks().get(j).getNode2().equals(graph.getNode(i))){
-                            if (distance[graph.getLinks().get(j).getNode1().getId()] > (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()])){
+                        else if(graph.getLinks().get(j).getNode2().equals(graph.getNode(i))) {
+                            if (distance[graph.getLinks().get(j).getNode1().getId()] > (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode2().getId()])) {
                                 //sets equal as the same thing
-                                distance[graph.getLinks().get(j).getNode1().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode1().getId()]);
+                                distance[graph.getLinks().get(j).getNode1().getId()] = (graph.getLinks().get(j).getValue() + distance[graph.getLinks().get(j).getNode2().getId()]);
                                 //doesn't set destination links for source
-                                if(!graph.getLinks().get(j).getNode2().equals(source)) {
+                                if (!graph.getLinks().get(j).getNode1().equals(source)) {
                                     //getting the links for shortest paths
-                                    links[graph.getLinks().get(j).getNode2().getId() - sourcePassed] = graph.getLinks().get(j);
-
+                                    links[numAddedLinks] = graph.getLinks().get(j);
+                                    numAddedLinks++;
                                 }
+                            }
+                        }
                     }
                 }
             }
