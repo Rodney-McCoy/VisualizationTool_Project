@@ -9,6 +9,12 @@ public class AnimationArea extends JPanel{
     private int firstNode;
     private int secondNode;
 
+
+    public Graph getGraph() {
+        return graph;
+    }
+
+
     /**
      * AnimationArea- contructor
      * @param feedback - Jpanel to send directions to
@@ -18,6 +24,7 @@ public class AnimationArea extends JPanel{
         super();
         this.feedback = feedback;
         this.graph = graph;
+        paint(this.getGraphics());
     }
 
     /**deleteComponents- uses mouse to delete a node or edge
@@ -198,7 +205,7 @@ public class AnimationArea extends JPanel{
     public void paint(Graphics g) {
         super.paint(g);
         this.setBackground(Color.WHITE);
-        g.setFont(new Font ("TimesRoman", Font.BOLD, 15));
+        //g.setFont(new Font ("TimesRoman", Font.BOLD, 15));
         drawEdges(g, graph);
         drawNodes(g, graph);
     }

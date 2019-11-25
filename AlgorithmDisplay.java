@@ -9,12 +9,15 @@ public class AlgorithmDisplay {
     private JButton button1;
     private JButton restartButton;
     public AnimationArea animationArea2;
+    private Graph userGraph;
 
 //    private void createUIComponents() {
 //        animationArea2 = new AnimationArea(this.feedback, new Graph());
 //    }
 
-    public AlgorithmDisplay() {
+    public AlgorithmDisplay(Graph userGraph) {
+        this.userGraph=userGraph;
+
         button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -24,6 +27,6 @@ public class AlgorithmDisplay {
     }
 
     private void createUIComponents() {
-        animationArea2 = new AnimationArea(this.feedback, new Graph());
+        animationArea2 = new AnimationArea(this.feedback, userGraph);
     }
 }

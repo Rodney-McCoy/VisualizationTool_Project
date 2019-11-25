@@ -1,3 +1,5 @@
+import jdk.jshell.spi.ExecutionControlProvider;
+
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -48,13 +50,15 @@ public class Gui extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 JFrame algFrame = new JFrame("Bellman Ford Solution");
-                AlgorithmDisplay algPanel = new AlgorithmDisplay();
+                AlgorithmDisplay algPanel = new AlgorithmDisplay(animationArea1.getGraph());
                 algFrame.setContentPane(algPanel.mainPanel);
                 algFrame.setLocation(0,0);
                 algFrame.setSize(500,1000);
                 algFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
                 algFrame.pack();
                 algFrame.setVisible(true);
+
+                //algPanel.animationArea2.paint(algPanel.animationArea2.getGraphics());
             }
         });
 
