@@ -141,7 +141,7 @@ class AlgorithmsTest {
 
         //create the graph using the algorithm
         try {
-            Graph testGraph = Algorithms.bellmanFord(graph, graph.getNode("1"));
+            Graph testGraph = Algorithms.bellmanFord(graph, 1);
 
         //Links contain a value and the two nodes it links therefor if all the links are equal the graphs are equal
 
@@ -172,7 +172,7 @@ class AlgorithmsTest {
                 }
             }
         }
-        }catch(Exception e){}
+        }catch(IllegalArgumentException e){}
         assert(testPass);
         this.graph = null;
     }

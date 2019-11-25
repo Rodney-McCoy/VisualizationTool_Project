@@ -17,12 +17,21 @@ public class Graph {
         this.links = new ArrayList<Link>();
     }
 
+    public Graph clone(){
+        Graph newGraph = new Graph();
+        List<Node> newNodes = new ArrayList<>(nodes);
+        List<Link> newLinks = new ArrayList<>(links);
+        newGraph.setNodes(newNodes);
+        newGraph.setLinks(newLinks);
+        return newGraph;
+    }
+
     /**
      * Creates and adds a new Node to the Graph
      * @param name The name of the Node
      * @throws IllegalArgumentException
      */
-    public void addNode(String name) throws Exception {
+    public void addNode(String name) throws IllegalArgumentException {
         if(getNode(name) != null){
             throw new IllegalArgumentException("Node with same name already exists");
         }

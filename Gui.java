@@ -50,16 +50,27 @@ public class Gui extends JFrame{
         bellmanFordButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                JFrame algFrame = new JFrame("Bellman Ford Solution");
-                AlgorithmDisplay algPanel = new AlgorithmDisplay(animationArea1.getGraph());
-                algFrame.setContentPane(algPanel.mainPanel);
-                algFrame.setLocation(0,0);
-                algFrame.setSize(500,1000);
-                algFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                algFrame.pack();
-                algFrame.setVisible(true);
+                try{
+                    char[] sourceNodeC;
+                    String sourceNodeS = JOptionPane.showInputDialog(dijkstraButton, "Enter the Char of the Source Node");
+                    sourceNodeC = sourceNodeS.toUpperCase().toCharArray();
+                    if(sourceNodeC.length != 1){
+                        throw new IllegalArgumentException("Please enter only one character");
+                    }
 
-                //algPanel.animationArea2.paint(algPanel.animationArea2.getGraphics());
+                    JFrame algFrame = new JFrame("Bellman Ford's Solution");
+                    AlgorithmDisplay algPanel = new AlgorithmDisplay(Algorithms.bellmanFord(animationArea1.getGraph().clone(),
+                            sourceNodeC[0] - 65));
+                    algFrame.setContentPane(algPanel.mainPanel);
+                    algFrame.setLocation(0,0);
+                    algFrame.setSize(500,500);
+                    algFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    algFrame.pack();
+                    algFrame.setVisible(true);
+
+                }catch (ArrayIndexOutOfBoundsException | IllegalArgumentException exception){
+                    System.out.println(exception);
+                }
             }
         });
 
@@ -68,7 +79,6 @@ public class Gui extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 //run dijkstra's
                 //draw graph returned from dijkstra's in new window
-
                 try{
                     char[] startNodeC;
                     String startNodeS = JOptionPane.showInputDialog(dijkstraButton, "Enter the Char of the Starting Node");
@@ -84,7 +94,7 @@ public class Gui extends JFrame{
                     }
 
                     JFrame algFrame = new JFrame("Dijkstra's Solution");
-                    AlgorithmDisplay algPanel = new AlgorithmDisplay(Algorithms.dijkstra(animationArea1.getGraph(),
+                    AlgorithmDisplay algPanel = new AlgorithmDisplay(Algorithms.dijkstra(animationArea1.getGraph().clone(),
                             startNodeC[0] - 65, endNodeC[0] - 65));
                     algFrame.setContentPane(algPanel.mainPanel);
                     algFrame.setLocation(0,0);
@@ -93,12 +103,9 @@ public class Gui extends JFrame{
                     algFrame.pack();
                     algFrame.setVisible(true);
 
-                }catch (ArrayIndexOutOfBoundsException ex){
-                    System.out.println(ex);
-                    System.out.println("Either the starting or ending nodes don't exist");
+                }catch (ArrayIndexOutOfBoundsException | IllegalArgumentException exception){
+                    System.out.println(exception);
                 }
-
-                //feedback.setText("Dijkstra's selected.  Not added yet");
             }
         });
         floydWarshallButton.addActionListener(new ActionListener() {
